@@ -19,7 +19,7 @@ AWS recommends using the same name, `OrganizationAccountAccessRole`, for the cre
 
 <br/>
 
-![GitHub Commit Status](images/OrganizationAccountAccessRole.png)
+![OrganizationAccountAccessRole](images/OrganizationAccountAccessRole.png)
 
 
 ## Usage
