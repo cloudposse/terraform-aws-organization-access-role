@@ -72,10 +72,10 @@ https://signin.aws.amazon.com/switchrole
 
 ## Variables
 
-|  Name                   |  Default                                       |  Description                                                                                       | Required |
-|:------------------------|:-----------------------------------------------|:---------------------------------------------------------------------------------------------------|:--------:|
-| `master_account_id`     | ``                                             | The ID of the master account to grant permissions to access the current account                    | Yes      |
-| `role_name`             | `OrganizationAccountAccessRole`                | The name of the role to grant permissions to delegated IAM users in the master account to the current account   | No      |
+|  Name                   |  Default                          |  Description                                                                                       | Required |
+|:------------------------|:----------------------------------|:---------------------------------------------------------------------------------------------------|:--------:|
+| `master_account_id`     | ``                                | The ID of the master account to grant permissions to access the current account                    | Yes      |
+| `role_name`             | `OrganizationAccountAccessRole`   | The name of the role to grant permissions to delegated IAM users in the master account to the current account   | No      |
 | `policy_arn`            | `arn:aws:iam::aws:policy/AdministratorAccess`  | Policy ARN to attach to the role. By default it attaches `AdministratorAccess` managed policy to grant full access to AWS services and resources in the current account   | No      |
 
 
