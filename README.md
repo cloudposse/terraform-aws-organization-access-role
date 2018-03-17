@@ -8,7 +8,11 @@ https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_
 ## Usage
 
 ```hcl
-}
+module "organization_access_role" {
+  source                   = "git::https://github.com/cloudposse/terraform-aws-organization-access-role.git?ref=master"
+  name                     = "${var.name}"
+  stage                    = "${var.stage}"
+  namespace                = "${var.namespace}"
 ```
 
 
