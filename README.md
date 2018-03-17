@@ -1,8 +1,19 @@
 # terraform-aws-organization-access-role [![Build Status](https://travis-ci.org/cloudposse/terraform-aws-organization-access-role.svg?branch=master)](https://travis-ci.org/cloudposse/terraform-aws-organization-access-role)
 
-Terraform module to grant access to assume the OrganizationAccountAccessRole role
+Terraform module to create the `OrganizationAccountAccessRole` role to grant admin permissions to delegated IAM users in the master account to an invited member account
 
 https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_access.html
+
+
+## Introduction
+
+By default, when you create a member account as part of your Organization, AWS automatically creates `OrganizationAccountAccessRole` in the member account.
+
+That role grants admin permissions to the member to delegated IAM users in the master account.
+
+However, member accounts that you invite to join your Organization do not automatically get the role created.
+
+This module creates `OrganizationAccountAccessRole` role in the invited member account.
 
 
 ## Usage
