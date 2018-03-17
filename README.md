@@ -58,7 +58,7 @@ After the role has been created in the invited member account, login to the mast
 
 Then attach the policy to a master account Group that you want to delegate administration of the invited member account.
 
-After that, users who are members of the Group in the master account will be able to assume the role and administer the invited account by going here:
+After that, users who are members of the Group in the master account will be able to assume the role and administer the invited member account by going here:
 
 (change `YYYYYYYYYYYY` to the ID of the invited member account)
 
