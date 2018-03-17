@@ -1,6 +1,6 @@
 # terraform-aws-organization-access-role [![Build Status](https://travis-ci.org/cloudposse/terraform-aws-organization-access-role.svg?branch=master)](https://travis-ci.org/cloudposse/terraform-aws-organization-access-role)
 
-Terraform module to create `OrganizationAccountAccessRole` to grant admin permissions to delegated IAM users in the master account to the invited member account
+Terraform module to create an IAM role to grant permissions to delegated IAM users in the master account to an invited member account
 
 https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_access.html
 
@@ -9,37 +9,83 @@ https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_
 
 By default, when you create a member account as part of your Organization, AWS automatically creates `OrganizationAccountAccessRole` in the member account.
 
-That role grants admin permissions to the member account to delegated IAM users in the master account.
+The role grants admin permissions to the member account to delegated IAM users in the master account.
 
 However, member accounts that you invite to join your Organization do not automatically get the role created.
 
-This module creates `OrganizationAccountAccessRole` role in the invited member account.
+This module creates `OrganizationAccountAccessRole` role in an invited member account.
+
+AWS recommends using the same name, `OrganizationAccountAccessRole`, for the created role for consistency and ease of remembering.
+
+<br/>
+
+![GitHub Commit Status](images/OrganizationAccountAccessRole.png)
 
 
 ## Usage
 
 ```hcl
 module "organization_access_role" {
-  source                   = "git::https://github.com/cloudposse/terraform-aws-organization-access-role.git?ref=master"
-  name                     = "${var.name}"
-  stage                    = "${var.stage}"
-  namespace                = "${var.namespace}"
+  source            = "git::https://github.com/cloudposse/terraform-aws-organization-access-role.git?ref=master"
+  master_account_id = "XXXXXXXXXXXX"
+  role_name         = "OrganizationAccountAccessRole"
+  policy_arn        = "arn:aws:iam::aws:policy/AdministratorAccess"
+```
+
+
+After the role has been created in the invited member account, login to the master account and create the following policy:
+
+(change `YYYYYYYYYYYY` to the ID of the invited member account)
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "",
+            "Effect": "Allow",
+            "Action": [
+                "sts:AssumeRole"
+            ],
+            "Resource": [
+                "arn:aws:iam::YYYYYYYYYYYY:role/OrganizationAccountAccessRole"
+            ]
+        }
+    ]
+}
+```
+
+
+Then attach the policy to a master account Group that you want to delegate administration of the invited member account.
+
+After that, users who are members of the Group in the master account will be able to assume the role and administer the invited account by going here:
+
+(change `YYYYYYYYYYYY` to the ID of the invited member account)
+
+```
+https://signin.aws.amazon.com/switchrole
+                ?account=YYYYYYYYYYYY
+                &roleName=OrganizationAccountAccessRole
+                &displayName=Dev
 ```
 
 
 ## Variables
 
-|  Name                               |  Default            |  Description                                                                                       | Required |
-|:------------------------------------|:-------------------:|:---------------------------------------------------------------------------------------------------|:--------:|
-| `namespace`                         | ``                  | Namespace (e.g. `cp` or `cloudposse`)                                                              | Yes      |
-| `stage`                             | ``                  | Stage (e.g. `prod`, `dev`, `staging`)                                                              | Yes      |
-| `name`                              | ``                  | Name  (e.g. `app`)                                                                                 | Yes      |
-| `attributes`                        | `[]`                | Additional attributes (e.g. `policy` or `role`)                                                    | No       |
-| `tags`                              | `{}`                | Additional tags  (e.g. `map("BusinessUnit","XYZ")`                                                 | No       |
-| `delimiter`                         | `-`                 | Delimiter to be used between `name`, `namespace`, `stage`, `attributes`                            | No       |
+|  Name                   |  Default                                       |  Description                                                                                       | Required |
+|:------------------------|:-----------------------------------------------|:---------------------------------------------------------------------------------------------------|:--------:|
+| `master_account_id`     | ``                                             | The ID of the master account to grant permissions to access the current account                    | Yes      |
+| `role_name`             | `OrganizationAccountAccessRole`                | The name of the role to grant permissions to delegated IAM users in the master account to the current account   | No      |
+| `policy_arn`            | `arn:aws:iam::aws:policy/AdministratorAccess`  | Policy ARN to attach to the role. By default it attaches `AdministratorAccess` managed policy to grant full access to AWS services and resources in the current account   | No      |
 
 
 ## Outputs
+
+| Name                | Description                                         |
+|:--------------------|:----------------------------------------------------|
+| `role_name`         | The name of the crated role                         |
+| `role_id`           | The stable and unique string identifying the role   |
+| `role_arn`          | The Amazon Resource Name (ARN) specifying the role  |
 
 
 

@@ -1,32 +1,16 @@
-variable "namespace" {
-  description = "Namespace (e.g. `cp` or `cloudposse`)"
+variable "master_account_id" {
   type        = "string"
+  description = "The ID of the master account to grant permissions to access the current account"
 }
 
-variable "stage" {
-  description = "Stage (e.g. `prod`, `dev`, `staging`)"
+variable "role_name" {
   type        = "string"
+  default     = "OrganizationAccountAccessRole"
+  description = "The name of the role to grant permissions to delegated IAM users in the master account to the current account"
 }
 
-variable "name" {
-  description = "Name  (e.g. `app` or `db`)"
+variable "policy_arn" {
   type        = "string"
-}
-
-variable "delimiter" {
-  type        = "string"
-  default     = "-"
-  description = "Delimiter to be used between `name`, `namespace`, `stage`, `attributes`"
-}
-
-variable "attributes" {
-  type        = "list"
-  default     = []
-  description = "Additional attributes (e.g. `policy` or `role`)"
-}
-
-variable "tags" {
-  type        = "map"
-  default     = {}
-  description = "Additional tags (e.g. map('BusinessUnit`,`XYZ`)"
+  default     = "arn:aws:iam::aws:policy/AdministratorAccess"
+  description = "Policy ARN to attach to the role. By default it attaches `AdministratorAccess` managed policy to grant full access to AWS services and resources in the current account"
 }
