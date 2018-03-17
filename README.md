@@ -9,7 +9,7 @@ https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_
 
 By default, when you create a member account as part of your Organization, AWS automatically creates `OrganizationAccountAccessRole` in the member account.
 
-That role grants admin permissions to the member to delegated IAM users in the master account.
+That role grants admin permissions to the member account to delegated IAM users in the master account.
 
 However, member accounts that you invite to join your Organization do not automatically get the role created.
 
