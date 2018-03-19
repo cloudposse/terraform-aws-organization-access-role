@@ -1,6 +1,6 @@
 # terraform-aws-organization-access-role [![Build Status](https://travis-ci.org/cloudposse/terraform-aws-organization-access-role.svg?branch=master)](https://travis-ci.org/cloudposse/terraform-aws-organization-access-role)
 
-Terraform module to create an IAM role to grant permissions to delegated IAM users in the master account to an invited member account
+Terraform module to create an IAM Role to grant permissions to delegated IAM users in the master account to access an invited member account
 
 https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_access.html
 
@@ -68,6 +68,10 @@ https://signin.aws.amazon.com/switchrole
                 &roleName=OrganizationAccountAccessRole
                 &displayName=Dev
 ```
+
+
+__NOTE__: You can use [terraform-aws-organization-access-group](https://github.com/cloudposse/terraform-aws-organization-access-group) module
+to create an IAM Group and Policy to grant permissions to delegated IAM users in the Organization's master account to access a member account.
 
 
 ## Variables
