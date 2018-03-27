@@ -23,7 +23,7 @@ resource "aws_iam_role" "default" {
 
 # https://www.terraform.io/docs/providers/aws/r/iam_role_policy_attachment.html
 # By default it attaches `AdministratorAccess` managed policy to grant full access to AWS services and resources in the current account
-resource "aws_iam_role_policy_attachment" "test-attach" {
+resource "aws_iam_role_policy_attachment" "default" {
   role       = "${aws_iam_role.default.name}"
   policy_arn = "${var.policy_arn}"
 }
