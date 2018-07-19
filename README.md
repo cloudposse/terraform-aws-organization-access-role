@@ -30,12 +30,12 @@ It's 100% Open Source and licensed under the [APACHE2](LICENSE).
 
 
 ![OrganizationAccountAccessRole](images/OrganizationAccountAccessRole.png)
-*Organization account access role*
+*Organization Account Access Role as Viewed from the AWS Web Console*
 
 
 ## Introduction
 
-y default, when you create a member account as part of your Organization, AWS automatically creates `OrganizationAccountAccessRole` in the member account.
+By default, when you create a member account as part of your Organization, AWS automatically creates `OrganizationAccountAccessRole` in the member account.
 
 The role grants admin permissions to the member account to delegated IAM users in the master account.
 

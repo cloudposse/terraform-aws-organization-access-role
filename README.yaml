@@ -40,7 +40,7 @@ description: |-
   https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_access.html
 
 introduction: |-
-  y default, when you create a member account as part of your Organization, AWS automatically creates `OrganizationAccountAccessRole` in the member account.
+  By default, when you create a member account as part of your Organization, AWS automatically creates `OrganizationAccountAccessRole` in the member account.
 
   The role grants admin permissions to the member account to delegated IAM users in the master account.
 
@@ -105,7 +105,7 @@ usage: |-
 
 screenshots:
   - name: "OrganizationAccountAccessRole"
-    description: "Organization account access role"
+    description: "Organization Account Access Role as Viewed from the AWS Web Console"
     url: "images/OrganizationAccountAccessRole.png"
 
 include:
