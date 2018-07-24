@@ -1,0 +1,118 @@
+---
+#
+# This is the canonical configuration for the `README.md`
+# Run `make readme` to rebuild the `README.md`
+#
+
+# Name of this project
+name: terraform-aws-organization-access-role
+
+# Logo for this project
+#logo: docs/logo.png
+
+# License of this project
+license: "APACHE2"
+
+# Canonical GitHub repo
+github_repo: cloudposse/terraform-aws-organization-access-role
+
+# Badges to display
+badges:
+  - name: "Build Status"
+    image: "https://travis-ci.org/cloudposse/terraform-aws-organization-access-role.svg?branch=master"
+    url: "https://travis-ci.org/cloudposse/terraform-aws-organization-access-role"
+  - name: "Latest Release"
+    image: "https://img.shields.io/github/release/cloudposse/terraform-aws-organization-access-role.svg"
+    url: "https://github.com/cloudposse/terraform-aws-organization-access-role/releases/latest"
+  - name: "Slack Community"
+    image: "https://slack.cloudposse.com/badge.svg"
+    url: "https://slack.cloudposse.com"
+
+related:
+  - name: "terraform-aws-organization-access-group"
+    description: "Terraform module to create an IAM Group and Policy to grant permissions to delegated IAM users in the Organization's master account to access a member account"
+    url: "https://github.com/cloudposse/terraform-aws-organization-access-group"
+
+# Short description of this project
+description: |-
+  Terraform module to create an IAM Role to grant permissions to delegated IAM users in the master account to access an invited member account
+
+  https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_access.html
+
+introduction: |-
+  By default, when you create a member account as part of your Organization, AWS automatically creates `OrganizationAccountAccessRole` in the member account.
+
+  The role grants admin permissions to the member account to delegated IAM users in the master account.
+
+  However, member accounts that you invite to join your Organization do not automatically get the role created.
+
+  This module creates `OrganizationAccountAccessRole` role in an invited member account.
+
+  AWS recommends using the same name, `OrganizationAccountAccessRole`, for the created role for consistency and ease of remembering.
+
+  <br/>
+
+# How to use this project
+usage: |-
+  ```hcl
+  module "organization_access_role" {
+    source            = "git::https://github.com/cloudposse/terraform-aws-organization-access-role.git?ref=master"
+    master_account_id = "XXXXXXXXXXXX"
+    role_name         = "OrganizationAccountAccessRole"
+    policy_arn        = "arn:aws:iam::aws:policy/AdministratorAccess"
+  ```
+
+
+  After the role has been created in the invited member account, login to the master account and create the following policy:
+
+  (change `YYYYYYYYYYYY` to the ID of the invited member account)
+
+  ```json
+  {
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Sid": "",
+              "Effect": "Allow",
+              "Action": [
+                  "sts:AssumeRole"
+              ],
+              "Resource": [
+                  "arn:aws:iam::YYYYYYYYYYYY:role/OrganizationAccountAccessRole"
+              ]
+          }
+      ]
+  }
+  ```
+
+
+  Then attach the policy to a master account Group that you want to delegate administration of the invited member account.
+
+  After that, users who are members of the Group in the master account will be able to assume the role and administer the invited member account by going here:
+
+  (change `YYYYYYYYYYYY` to the ID of the invited member account)
+
+  ```
+  https://signin.aws.amazon.com/switchrole
+                  ?account=YYYYYYYYYYYY
+                  &roleName=OrganizationAccountAccessRole
+                  &displayName=Dev
+  ```
+
+
+  __NOTE__: You can use [terraform-aws-organization-access-group](https://github.com/cloudposse/terraform-aws-organization-access-group) module
+  to create an IAM Group and Policy to grant permissions to delegated IAM users in the Organization's master account to access a member account.
+
+screenshots:
+  - name: "OrganizationAccountAccessRole"
+    description: "Organization Account Access Role as Viewed from the AWS Web Console"
+    url: "images/OrganizationAccountAccessRole.png"
+
+include:
+  - "docs/targets.md"
+  - "docs/terraform.md"
+
+# Contributors to this project
+contributors:
+  - name: "Andriy Knysh"
+    github: "aknysh"
