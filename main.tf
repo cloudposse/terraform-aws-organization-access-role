@@ -1,3 +1,5 @@
+data "aws_caller_identity" "current" {}
+
 # https://www.terraform.io/docs/providers/aws/d/iam_policy_document.html
 data "aws_iam_policy_document" "assume_role" {
   statement {
@@ -7,7 +9,7 @@ data "aws_iam_policy_document" "assume_role" {
 
     principals {
       type        = "AWS"
-      identifiers = ["arn:aws:iam::${var.master_account_id}:root"]
+      identifiers = ["arn:aws:iam::${var.master_account_id}:root", "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"]
     }
 
     effect = "Allow"
