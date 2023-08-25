@@ -118,7 +118,7 @@ The table below correctly indicates which inputs are required.
 
 ```hcl
 module "organization_access_role" {
-  source            = "git::https://github.com/cloudposse/terraform-aws-organization-access-role.git?ref=master"
+  source            = "git::https://github.com/cloudposse/terraform-aws-organization-access-role.git?ref=main"
   master_account_id = "XXXXXXXXXXXX"
   role_name         = "OrganizationAccountAccessRole"
   policy_arn        = "arn:aws:iam::aws:policy/AdministratorAccess"
